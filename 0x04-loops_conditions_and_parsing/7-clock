@@ -2,20 +2,27 @@
 # This script is displaying the time for 12 hours and 59 minutes using a while loop.
 
 # Initializing variables
-hours=0
+hours="0"
+minutes="1"
 
-while [ $hours -lt 12 ]; do
+# Outer loop for hours
+while [ $hours -lt 13 ]
+do
+    # Displaying the current hour
     echo "Hour: $hours"
 
-    # Using a nested while loop to iterate through minutes
-    minutes=1
-    while [ $minutes -lt 60 ]; do
-        echo $minutes
-        ((minutes++))
+    # Inner loop for minutes
+    while [ $minutes -lt 60 ]
+    do
+        # Displaying the current minute
+        echo "$minutes"
+        # Incrementing the minute
+        minutes=$((minutes+1))
     done
 
     # Resetting minutes for the next hour
-    minutes=1
+    minutes="1"
 
-    ((hours++))
+    # Incrementing the hour
+    hours=$((hours+1))
 done
