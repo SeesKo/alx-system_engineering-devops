@@ -1,24 +1,26 @@
 #!/usr/bin/env bash
-# This script shows handling of signals, creating a PID file and cleanup
-
-# Trap signals and perform actions
-trap 'echo "Y U no love me?!"; cleanup_and_exit;' INT
-trap 'echo "I hate the kill command"; cleanup_and_exit;' TERM QUIT
-
-# Function to clean up and exit
-cleanup_and_exit() {
-    rm -f "$pid_file"  # Remove the PID file
-    exit 0
-}
+# This script shows handling of signals, creating a PID file, and cleanup
 
 # Path to the PID file
 pid_file="/var/run/myscript.pid"
 
-# Create PID file
+# Creating PID file
 echo $$ > "$pid_file"
 
-# Display message indefinitely
-while true; do
+trap 'echo "I am invincible!!!"; exit' SIGTERM
+trap 'echo "Y U no love me?!"; cleanup_and_exit;' SIGINT
+trap 'echo "I hate the kill command"; cleanup_and_exit;' SIGTERM QUIT
+
+# Function to clean up and exit
+cleanup_and_exit()
+{
+    rm -f "$pid_file"  # Remove the PID file
+    exit 0
+}
+
+# Displaying message indefinitely
+while true
+do
     echo "To infinity and beyond"
     sleep 2
 done
