@@ -17,35 +17,21 @@ int infinite_while(void)
 }
 
 /**
- * main - Entry point of the program.
- *
- * Return: The infinite loop created by 'infinite_while'.
+ * main - program to fork 5 child processes
+ * Return: infinite_while
  */
 int main(void)
 {
-	pid_t child_pid;
-	int i;
+	pid_t zombie;
+	size_t n = 0;
 
-	/* Creating 5 child processes */
-	for (i = 0; i < 5; i++)
+	for (; n < 5; n++)
 	{
-		/* Forking the process to create a child */
-		child_pid = fork();
-
-		/* Checking for fork errors */
-		if (child_pid == -1)
-		{
-			perror("fork error");
-			exit(EXIT_FAILURE);
-		}
-
-		/* Child process */
-		if (child_pid == 0)
-		{
-			printf("Zombie process created, PID: %d\n", getpid());
+		zombie = fork();
+		if (zombie == 0)
 			exit(0);
-		}
+		else
+			printf("Zombie process created, PID: %d\n", zombie);
 	}
-
 	return (infinite_while());
 }
