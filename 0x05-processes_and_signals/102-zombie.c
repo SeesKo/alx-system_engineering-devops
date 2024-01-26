@@ -19,7 +19,7 @@ int infinite_while(void)
 /**
  * main - Entry point of the program.
  *
- * Return: Always returns 0.
+ * Return: The infinite loop created by 'infinite_while'.
  */
 int main(void)
 {
@@ -47,8 +47,5 @@ int main(void)
 		}
 	}
 
-	/* Parent process enters infinite loop */
-	infinite_while();
-
-	return (0);
+	return (infinite_while());
 }
