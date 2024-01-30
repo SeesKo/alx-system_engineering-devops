@@ -2,8 +2,8 @@
 
 input_string = ARGV[0]
 
-# Using the regular expression /School/ to match the word "School"
-match_result = input_string.match(/School/)
+# Using the regular expression /School/ to scan all occurrences
+matches = input_string.scan(/School/)
 
-# Printing the match result or an empty string if no match
-puts match_result ? match_result[0] : ''
+# Printing the concatenated result or an empty string if no match
+puts matches.empty? ? '' : matches.join
