@@ -2,7 +2,7 @@
 
 def match_repetition_token(input_string)
   # Use the regular expression /hb+t*n/ to match the test strings
-  matches = input_string.scan(/hb+t*n/)
+  matches = input_string.scan(/hb+n/)
   
   # Print the match results
   puts matches.join("\n")
