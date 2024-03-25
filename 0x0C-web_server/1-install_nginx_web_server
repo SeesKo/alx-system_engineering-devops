@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# This script installs Nginx and configures it to meet the requirements
+
+# Updating package list and install Nginx
+apt-get update -y
+apt-get install nginx -y
+
+# Ensuring Nginx is listening on port 80
+sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
+
+# Restarting Nginx (no systemctl)
+service nginx restart
+
+# Creating index.html with "Hello World!"
+echo "Hello World!" > /var/www/html/index.html
