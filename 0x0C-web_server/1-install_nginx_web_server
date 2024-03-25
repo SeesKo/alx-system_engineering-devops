@@ -4,9 +4,8 @@
 # Updating package list and install Nginx
 sudo apt-get -y update
 sudo apt-get -y install nginx
-
+sudo chown -R ubuntu /var/www
 # Creating index.html with "Hello World!"
 echo "Hello World!" > /var/www/html/index.html
-
 # Restarting Nginx (no systemctl)
 service nginx start
