@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
 # This script installs Nginx and configures it to meet the requirements
 
-# Updating package list and install Nginx
 sudo apt-get -y update
 sudo apt-get -y install nginx
-sudo chown -R ubuntu /var/www
-# Creating index.html with "Hello World!"
-echo "Hello World!" > /var/www/html/index.html
-# Restarting Nginx (no systemctl)
+echo "Hello World!" | sudo tee /usr/share/nginx/html/index.html
 service nginx start
