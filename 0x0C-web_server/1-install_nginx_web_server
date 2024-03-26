@@ -3,6 +3,7 @@
 
 apt-get -y update
 apt-get -y install nginx
+sudo service nginx start
 sudo ufw allow "Nginx HTTP"
 sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www
