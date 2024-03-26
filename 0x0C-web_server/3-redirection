@@ -1,15 +1,8 @@
 #!/usr/bin/env bash
-# This script installs Nginx, configures a redirection for /redirect_me, and restarts Nginx.
+# This script installs Nginx, configures a URL redirection, and restarts Nginx
 
-# Update package list
-apt-get update -y
-
-# Install Nginx
-apt-get install nginx -y
-
-# Configure Nginx redirection
-sed -i 's@location / {@&\nlocation /redirect_me {\nreturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n}@' /etc/nginx/sites-available/default
-
-# Restart Nginx to apply changes
-service nginx restart
-
+sudo apt-get -y install nginx
+echo "301 Moved Permanently" | sudo tee /usr/share/nginx/html/index.html
+fill="location /redirect_me {\nrewrite ^/(.*)$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;\n}\n"
+sudo sed -i "/# Only/ i $fill" /etc/nginx/sites-available/default
+sudo service nginx restart
