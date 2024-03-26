@@ -1,9 +1,30 @@
 #!/usr/bin/env bash
 # This script installs Nginx, configures a URL redirection & restarts Nginx
 
-sudo apt-get -y update
-sudo apt-get -y install nginx
-sudo ufw allow 'Nginx HTTP'
-echo "Hello World!" > /var/www/html/index.nginx-debian.html
-sudo sed -i "46i rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default
+# Install Nginx if not already installed
+if ! command -v nginx &> /dev/null
+then
+    apt-get update
+    apt-get -y install nginx
+fi
+
+# Define the redirection configuration
+redirection_config="\
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name _;
+
+    location /redirect_me {
+        return 301 https://www.example.com/redirected_page;
+    }
+
+    # Additional server configuration can be added here
+}
+"
+
+# Apply the redirection configuration using sed
+echo "$redirection_config" | sudo tee /etc/nginx/sites-available/redirect > /dev/null
+sudo ln -s /etc/nginx/sites-available/redirect /etc/nginx/sites-enabled/
 sudo service nginx restart
