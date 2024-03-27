@@ -8,7 +8,7 @@ exec { 'Update packages':
 # Install Nginx package
 package { 'nginx':
     ensure  => 'installed',
-    require => exec['update system'],
+    require => Exec['update system'],
 }
 
 # Set up custom index page
