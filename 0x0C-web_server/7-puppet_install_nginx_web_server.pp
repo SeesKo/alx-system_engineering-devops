@@ -7,8 +7,8 @@ exec { 'Update packages':
 
 # Install Nginx package
 package { 'NGINX':
-    ensure => 'installed',
-    require => exec['update system'],
+    ensure  => 'installed',
+    require => Exec['update system'],
 }
 
 # Set up custom index page
@@ -25,6 +25,6 @@ exec { '301 redirect':
 
 # Ensure Nginx service is running
 service { 'NGINX':
-    ensure => running,
+    ensure  => running,
     require => Package['nginx'],
 }
