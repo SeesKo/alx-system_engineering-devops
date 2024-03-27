@@ -1,7 +1,7 @@
 # Puppet manifest to install and configure Nginx server
 
 # Update system package lists
-exec { 'Update packages':
+exec { 'update system':
     command => '/usr/bin/apt-get update',
 }
 
