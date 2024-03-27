@@ -17,7 +17,7 @@ file { '/var/www/html/index.html':
 }
 
 # Configure 301 redirect for /redirect_me
-exec { '301 redirect':
+exec { 'redirect_me':
     command  => '/bin/sed -i "/^server {/a \    rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default',
     provider => 'shell',
     require  => Package['nginx'],
