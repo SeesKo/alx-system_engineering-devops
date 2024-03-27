@@ -6,7 +6,7 @@ exec { 'Update packages':
 }
 
 # Install Nginx package
-package { 'NGINX':
+package { 'nginx':
     ensure  => 'installed',
     require => Exec['update system'],
 }
@@ -24,7 +24,7 @@ exec { '301 redirect':
 }
 
 # Ensure Nginx service is running
-service { 'NGINX':
+service { 'nginx':
     ensure  => running,
     require => Package['nginx'],
 }
