@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 # Script configures Nginx so that its HTTP response contains a custom header
 
-apt-get -y update
-apt-get -y install nginx
-ufw allow 'Nginx HTTP'
-echo "Holberton School" > /var/www/html/index.nginx-debian.html
-echo "Ceci n'est pas une page
-" > /var/www/html/404.html
-sed -i "46i rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default
-sed -i "46i error_page 404 /404.html;" /etc/nginx/sites-available/default
-sed -i "46i add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-available/default
-/etc/init.d/nginx restart
+sudo apt-get -y install nginx
+echo "Hello World!" | sudo tee /usr/share/nginx/html/index.html
+new_string="location /redirect_me {\nrewrite ^/(.*)$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;\n}\n"
+sed -i "/# Only/ i $new_string" /etc/nginx/sites-available/default
+echo "Ceci n'est pas une page" | sudo tee /usr/share/nginx/html/404.html
+replace="#error_page"
+new_string="error_page"
+sed -i "s/$replace/$new_string/" /etc/nginx/sites-available/default
+served_by="add_header X-Served-By $(cat /etc/hostname);"
+sudo sed -i "/index.htm;/ a $served_by" /etc/nginx/sites-enabled/default
+sudo service nginx restart
