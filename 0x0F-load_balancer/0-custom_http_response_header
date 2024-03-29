@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
 # Script configures Nginx so that its HTTP response contains a custom header
 
-apt-get -y update
-apt-get -y install nginx
-ufw allow 'Nginx HTTP'
-echo "Hello World!" > /var/www/html/index.nginx-debian.html
-echo "Ceci n'est pas une page" > /var/www/html/custom_404.html
-sed -i "46i error_page 404 /custom_404.html;" /etc/nginx/sites-available/default
-sed -i "46i rewrite ^/redirect_me  permanent;" /etc/nginx/sites-available/default
-sed -i "/server_name _;/ a add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-available/default
-service nginx restart
+sudo apt-get update
+sudo apt-get -y install nginx
+sudo sed -i "/^.*#.*/! s/server_name localhost;*$/server_name localhost;\n\tadd_header X-Served-By $HOSTNAME;/" /etc/nginx/sites-available/default
+sudo service nginx restart
