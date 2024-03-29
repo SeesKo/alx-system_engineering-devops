@@ -1,14 +1,18 @@
 #!/usr/bin/env bash
 # Script configures Nginx so that its HTTP response contains a custom header
 
-apt-get -y update
-apt-get -y install nginx
-sudo ufw allow "Nginx HTTP"
-echo "Hello World!" > /var/www/html/index.nginx-debian.html
+# Updating Packages before performing installations
+sudo apt-get update
+sudo apt-get install -y nginx
 
-new_string="location /redirect_me {\nrewrite ^/(.*)$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;\n}\n"
+# Creating an index.html page
+echo "Hello World!" | sudo tee /var/www/html/index.html
+
+# Performing a "moved permanently redirection" (301)
+new_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/Seesko permanent;"
 sudo sed -i "s/server_name _;/$new_string/" /etc/nginx/sites-enabled/default
 
+# Creating a 404 Custom error page
 echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
 new_string="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
 
