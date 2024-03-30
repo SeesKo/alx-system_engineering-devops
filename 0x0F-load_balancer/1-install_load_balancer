@@ -42,8 +42,8 @@ frontend http_front
 backend http_back
     balance roundrobin
     http-request set-header X-Served-By %[req.hdr(header_name)]
-    server web-01 100.25.15.192:80 check
-    server web-02 3.94.181.137:80 check
+    server 528175-web-01 100.25.15.192:80 check
+    server 528175-web-02 3.94.181.137:80 check
 EOF'
 
 # Restart HAProxy
