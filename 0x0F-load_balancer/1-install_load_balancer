@@ -5,45 +5,8 @@
 # Update package lists and install HAProxy
 apt-get -y update
 apt-get install -y haproxy
-
-# Configure HAProxy
-cat <<EOF > /etc/haproxy/haproxy.cfg
-global
-    log /dev/log    local0
-    log /dev/log    local1 notice
-    chroot /var/lib/haproxy
-    stats socket /run/haproxy/admin.sock mode 660 level admin
-    stats timeout 30s
-    user haproxy
-    group haproxy
-    daemon
-
-defaults
-    log     global
-    mode    http
-    option  httplog
-    option  dontlognull
-    timeout connect 5000
-    timeout client  50000
-    timeout server  50000
-    errorfile 400 /etc/haproxy/errors/400.http
-    errorfile 403 /etc/haproxy/errors/403.http
-    errorfile 408 /etc/haproxy/errors/408.http
-    errorfile 500 /etc/haproxy/errors/500.http
-    errorfile 502 /etc/haproxy/errors/502.http
-    errorfile 503 /etc/haproxy/errors/503.http
-    errorfile 504 /etc/haproxy/errors/504.http
-
-frontend http_front
-    bind *:80
-    stats uri /haproxy?stats
-    default_backend http_back
-
-backend http_back
-    balance roundrobin
-    server web-01 [STUDENT_ID]-web-01:80 check
-    server web-02 [STUDENT_ID]-web-02:80 check
-EOF
-
-# Restart HAProxy
-systemctl restart haproxy
+#front-end listener
+echo -e "\nfrontend Server\n\tbind *:80\n\tmode http\n\tdefault_backend My_Web_Servers\n\n" | sudo tee -a /etc/haproxy/haproxy.cfg
+#back-end web severs
+echo -e "backend My_Web_Servers\n\tbalance roundrobin\n\tserver web-01 100.25.15.192:80 check\n\tserver web-02 3.94.181.137:80 check" | sudo tee -a /etc/haproxy/haproxy.cfg
+sudo service haproxy restart
