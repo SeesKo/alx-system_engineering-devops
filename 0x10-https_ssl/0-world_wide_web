@@ -1,21 +1,16 @@
 #!/usr/bin/env bash
 # This script displays information about subdomains of a domain
 
-domain=$1
-SUBDOMAINS="www lb-01 web-01 web-02"
-
-function show_all() {
-    for arg in $SUBDOMAINS
-    do
-        echo -n "The subdomain $arg is a "
-        dig "$arg"."$domain" | grep -A1 'ANSWER SECTION:' | tail -n1 | awk '{print $4 " record and points to " $5}'
-    done
+print_domain_subdomain () {
+    dig "$1" | grep -A1 'ANSWER SECTION:' | sed -r "s/$1./$2/g" | awk -F" " ' NR==2 { print "The subdomain " $1 " is a " $4 " record and points to " $5 }'
 }
 
-if [ $# -eq 2 ]
+if [ "$#" -eq 2 ]
 then
-    echo -n "The subdomain $2 is a "
-    dig "$2"."$domain" | grep -A1 'ANSWER SECTION:' | tail -n1 | awk '{print $4 " record and points to " $5}'
+    print_domain_subdomain "$2.$1" "$2"
 else
-    show_all
+    print_domain_subdomain "www.$1" "www"
+    print_domain_subdomain "lb-01.$1" "lb-01"
+    print_domain_subdomain "web-01.$1" "web-01"
+    print_domain_subdomain "web-02.$1" "web-02"
 fi
