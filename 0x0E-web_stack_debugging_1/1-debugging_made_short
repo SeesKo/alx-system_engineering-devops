@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Script to modify Nginx configuration and adjust status message shown
+cp /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+pkill nginx | service nginx restart
+rm /run/nginx.pid
