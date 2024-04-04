@@ -1,29 +1,21 @@
 #!/usr/bin/env bash
 # This script displays information about subdomains of a domain
 
-get_domains() {
+domain=$1
+SUBDOMAINS="www lb-01 web-01 web-02"
 
-    if [ "$2" ]
-    then
-        source=$(dig "$2.$1" | grep -A1 'ANSWER SECTION:')
-        record=$(echo $source | awk '{print $7}')
-        ip=$(echo $source | awk '{print $8}')
-        echo "The subdomain $2 is a $record record and points to $ip"
-        return 0
-    fi
+function show_all() {
+    for arg in $SUBDOMAINS
+    do
+        echo -n "The subdomain $arg is a "
+        dig "$arg"."$domain" | grep -A1 'ANSWER SECTION:' | tail -n1 | awk '{print $4 " record and points to " $5}'
+    done
 }
 
-subdomains=("web-01" "web-02" "lb-01" "www")
-
-if [ ! "$1" ]
+if [ $# -eq 2 ]
 then
-    exit
-elif [ "$2" ]
-then
-    get_domains "$1" "$2"
+    echo -n "The subdomain $2 is a "
+    dig "$2"."$domain" | grep -A1 'ANSWER SECTION:' | tail -n1 | awk '{print $4 " record and points to " $5}'
 else
-    get_domains "$1" "${subdomains[3]}"
-    get_domains "$1" "${subdomains[2]}"
-    get_domains "$1" "${subdomains[0]}"
-    get_domains "$1" "${subdomains[1]}"
+    show_all
 fi
