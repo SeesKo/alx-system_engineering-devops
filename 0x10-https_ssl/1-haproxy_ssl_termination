@@ -41,7 +41,7 @@ frontend seesko-frontend
         default_backend seesko-backend
 
 frontend seesko-frontend-https
-        bind *:443 ssl crt /etc/haproxy/certs/www.seesko.tech.pem
+        bind *:443 ssl crt /etc/haproxy/certs/seesko.tech.pem
         http-request set-header X-Forwarded-Proto https
         default_backend seesko-backend
 
