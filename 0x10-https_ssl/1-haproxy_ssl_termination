@@ -45,7 +45,7 @@ frontend seesko-frontend-https
         http-request set-header X-Forwarded-Proto https
         default_backend seesko-backend
 
-backend seesko-tech-backend
+backend seesko-backend
         balance roundrobin
         server 528175-web-01 100.25.15.192:80 check
         server 528175-web-02 3.94.181.137:80 check
