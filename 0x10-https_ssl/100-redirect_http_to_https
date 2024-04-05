@@ -40,7 +40,7 @@ frontend seesko-frontend
         http-request set-header X_Forwarded-Proto http
         default_backend seesko-backend
 
-frontend clickviral-frontend-https
+frontend seesko-frontend-https
         bind *:443 ssl crt /etc/haproxy/certs/www.seesko.tech.pem
         http-request set-header X-Forwarded-Proto https
         default_backend seesko-backend
