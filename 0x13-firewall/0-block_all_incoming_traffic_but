@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Configures the UFW (Uncomplicated Firewall) on a server
+
+sudo apt-get update
+sudo apt-get install -y ufw
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 22/tcp     # Allow SSH
+sudo ufw allow 443/tcp    # Allow HTTPS
+sudo ufw allow 80/tcp     # Allow HTTP
+sudo ufw enable
