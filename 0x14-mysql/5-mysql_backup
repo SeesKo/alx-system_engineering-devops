@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Dumps MySQL databases, compresses with current date
+mysqldump -u root -p "$1" --opt --databases > backup.sql
+tar -zcvf "$(date '+%d-%m-%Y').tar.gz" backup.sql
