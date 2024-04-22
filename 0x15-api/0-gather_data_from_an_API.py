@@ -19,7 +19,7 @@ if __name__ == "__main__":
     user_data = user_response.json()
     employee_name = user_data.get("name")
 
-    # Get TODO list information
+    # Get 'TODO' list information
     todos_url = '{}todos?userId={}'.format(base_url, employee_id)
     todos_response = requests.get(todos_url)
     todos = todos_response.json()
@@ -27,7 +27,7 @@ if __name__ == "__main__":
     # Filter completed tasks
     completed_tasks = [task for task in todos if task.get("completed")]
 
-    # Display the TODO list progress
+    # Display the 'TODO' list progress
     print(
         f"Employee {employee_name} is done with tasks"
         f"({len(completed_tasks)}/{len(todos)}):"
