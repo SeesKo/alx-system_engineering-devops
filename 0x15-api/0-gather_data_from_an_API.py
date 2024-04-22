@@ -8,31 +8,29 @@ import sys
 
 
 if __name__ == "__main__":
-    # Getting employee ID from the command line argument
-    ID = int(sys.argv[1])
+    employee_id = sys.argv[1]
 
-    # Fetching employee information
-    user_url = f"https://jsonplaceholder.typicode.com/users/{ID}"
-    user_data = requests.get(user_url).json()
+    # Base URL for the REST API
+    base_url = 'https://jsonplaceholder.typicode.com/'
 
-    # Fetching employee's 'TODO' list
-    todos_url = f"https://jsonplaceholder.typicode.com/todos?userId={ID}"
-    todos_data = requests.get(todos_url).json()
-
-    # List of completed tasks
-    completed_tasks = [
-        task['title']
-        for task in todos_data
-        if task['completed']
-    ]
-
-    # Getting employee's name
+    # Get employee information
+    user_url = '{}users/{}'.format(base_url, employee_id)
+    user_response = requests.get(user_url)
+    user_data = user_response.json()
     employee_name = user_data.get("name")
 
-    # Displaying the required output
+    # Get TODO list information
+    todos_url = '{}todos?userId={}'.format(base_url, employee_id)
+    todos_response = requests.get(todos_url)
+    todos = todos_response.json()
+
+    # Filter completed tasks
+    completed_tasks = [task for task in todos if task.get("completed")]
+
+    # Display the TODO list progress
     print(
-        f"Employee {employee_name} is done with tasks "
-        f"({len(completed_tasks)}/{len(todos_data)}):"
+        f"Employee {employee_name} is done with tasks"
+        f"({len(completed_tasks)}/{len(todos)}):"
     )
     for task in completed_tasks:
-        print(f"\t {task}")
+        print("\t", task.get("title"))
