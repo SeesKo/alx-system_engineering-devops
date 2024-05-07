@@ -1,75 +1,72 @@
 #!/usr/bin/python3
 """
-Script that queries the Reddit API and prints
-a sorted count of given keywords.
+Function that queries the Reddit API and prints
+the top ten hot posts of a subreddit
 """
+import re
 import requests
-from collections import Counter
+import sys
 
 
-def count_words(subreddit, word_list, word_counter=None, after=None):
-    """
-    Recursively fetches titles of all hot articles for a given subreddit
-    and counts the occurrences of given keywords.
-    Prints a sorted count of the given keywords (case-insensitive).
-    """
-    # Initialize word_counter if not provided (for the first call)
-    if word_counter is None:
-        word_counter = Counter()
-
-    # Construct the URL for fetching hot posts with optional
-    # 'after' parameter for pagination
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=100"
-    if after:
-        url += f"&after={after}"
-
-    # Set a custom User-Agent
-    headers = {'User-Agent': 'RedditKeywordCounter/1.0 (Learning Project)'}
-
-    # Get the response from the endpoint without following redirects
-    response = requests.get(url, headers=headers, allow_redirects=False)
-
-    # If response status code isn't 200, return without printing anything
-    if response.status_code != 200:
+def add_title(dictionary, hot_posts):
+    """ Adds item into a list """
+    if len(hot_posts) == 0:
         return
 
-    # Parse the response JSON
-    data = response.json().get("data", {})
-    children = data.get("children", [])
+    title = hot_posts[0]['data']['title'].split()
+    for word in title:
+        for key in dictionary.keys():
+            c = re.compile("^{}$".format(key), re.I)
+            if c.findall(word):
+                dictionary[key] += 1
+    hot_posts.pop(0)
+    add_title(dictionary, hot_posts)
 
-    # If there are no children, return without printing anything
-    if not children:
+
+def recurse(subreddit, dictionary, after=None):
+    """ Queries to Reddit API """
+    u_agent = 'Mozilla/5.0'
+    headers = {
+        'User-Agent': u_agent
+    }
+
+    params = {
+        'after': after
+    }
+
+    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
+    res = requests.get(url,
+                       headers=headers,
+                       params=params,
+                       allow_redirects=False)
+
+    if res.status_code != 200:
+        return None
+
+    dic = res.json()
+    hot_posts = dic['data']['children']
+    add_title(dictionary, hot_posts)
+    after = dic['data']['after']
+    if not after:
         return
+    recurse(subreddit, dictionary, after=after)
 
-    # Loop through the titles of the hot posts
-    for child in children:
-        title = child.get("data", {}).get("title", "").lower()
 
-        # Split the title into words
-        words_in_title = title.split()
+def count_words(subreddit, word_list):
+    """ Init function """
+    dictionary = {}
 
-        # Count each keyword in the title
-        for keyword in word_list:
-            count = words_in_title.count(keyword.lower())
-            if count > 0:
-                word_counter[keyword.lower()] += count
+    for word in word_list:
+        dictionary[word] = 0
 
-    # Get the 'after' parameter for pagination
-    after = data.get("after", None)
+    recurse(subreddit, dictionary)
 
-    # Recursively call the function if there's more data to fetch
-    if after:
-        count_words(subreddit, word_list, word_counter, after)
+    lis = sorted(dictionary.items(), key=lambda kv: kv[1])
+    lis.reverse()
 
-    # If no more data to fetch, print results in sorted order
+    if len(lis) != 0:
+        for item in lis:
+            if item[1] is not 0:
+                print("{}: {}".format(item[0], item[1]))
     else:
-        # Sort by count in descending order, then by word in ascending order
-        sorted_word_counts = sorted(
-            word_counter.items(),
-            key=lambda item: (-item[1], item[0])
-        )
-
-        # Print the sorted word counts
-        for word, count in sorted_word_counts:
-            if count > 0:  # Skip words with no occurrences
-                print(f"{word}: {count}")
+        print("")
