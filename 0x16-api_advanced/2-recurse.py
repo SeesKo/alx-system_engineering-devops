@@ -3,7 +3,7 @@
 Script that queries the Reddit API and returns a list containing
 the titles of all hot articles for a given subreddit.
 """
-import requests  # HTTP requests library
+import requests
 
 
 def recurse(subreddit, hot_list=None, after=None):
@@ -45,7 +45,7 @@ def recurse(subreddit, hot_list=None, after=None):
     # Check for the 'after' key to see if there's more data to fetch
     after = data.get("data", {}).get("after", None)
 
-    # If there's an 'after', recurse with updated hot_list and 'after' value
+    # If 'after' exists, recurse with updated hot_list and 'after' value
     if after:
         return recurse(subreddit, hot_list, after)
 
