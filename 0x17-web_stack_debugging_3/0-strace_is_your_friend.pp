@@ -1,7 +1,6 @@
 # Puppet manifest to fix permissions and ownership for Apache 500 error
 
 exec { 'fix_permissions_and_ownership':
-  command => 'chmod -R 755 /var/www/html && chown -R www-data:www-data /var/www/html',
-  unless  => 'find /var/www/html -type d -not -perm 755 -or -not -user www-data -or -not -group www-data',
-  path    => ['/bin', '/usr/bin'],
+  command => 'sed -i "s/.phpp/.php/g"  /var/www/html/wp-settings.php',
+  path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
 }
