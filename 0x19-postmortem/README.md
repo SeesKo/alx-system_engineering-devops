@@ -1,5 +1,9 @@
 # Postmortem Report: Apache Docker Container Outage #
 
+
+![Humour-debugging-meme](1-make_people_read.png)
+
+
 ### Incident Date: March 25, 2024
 
 
