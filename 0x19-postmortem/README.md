@@ -11,7 +11,7 @@
 **Root Cause:** The root cause was that the Apache service inside the Docker container was not started due to a misconfiguration in the Docker container setup process.
 
 
-##Timeline
+## Timeline
 
 - **3:00 PM UTC:** The outage was detected when the system monitoring dashboard showed that the web server was not responding to requests.
 - **3:05 PM UTC:** The on-call engineer received an alert indicating that the service was unavailable.
@@ -30,7 +30,7 @@ The root cause of the outage was a misconfiguration in the Docker container setu
 To resolve the issue, the DevOps team manually started the Apache service using the command service apache2 start. This restored access to the web server, resolving the outage.
 
 
-##Corrective and Preventative Measures
+## Corrective and Preventative Measures
 
 To prevent this issue from happening again, the following corrective and preventative measures were identified:
 
