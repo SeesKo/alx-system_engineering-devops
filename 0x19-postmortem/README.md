@@ -8,6 +8,7 @@
 **Duration of Outage:** The outage lasted for approximately 45 minutes, starting at 3:00 PM and ending at 3:45 PM (UTC).
 
 **Impact:** The web service running on Apache inside a Docker container was inaccessible, affecting all users attempting to access the service. Approximately 100% of users were unable to access the site during the outage.
+
 **Root Cause:** The root cause was that the Apache service inside the Docker container was not started due to a misconfiguration in the Docker container setup process.
 
 
@@ -25,19 +26,19 @@
 
 ## Root Cause and Resolution
 
-The root cause of the outage was a misconfiguration in the Docker container setup. The Apache service was not configured to start automatically when the container launched. This led to a situation where the container was running, but the web server was not.  
+The root cause of the outage was a misconfiguration in the Docker container setup. The Apache service was not configured to start automatically when the container launched. This led to a situation where the container was running, but the web server was not.
 
-To resolve the issue, the DevOps team manually started the Apache service using the command service apache2 start. This restored access to the web server, resolving the outage.
+To resolve the issue, the DevOps team manually started the Apache service using the command `service apache2 start`. This restored access to the web server, resolving the outage.
 
 
 ## Corrective and Preventative Measures
 
 To prevent this issue from happening again, the following corrective and preventative measures were identified:
 
-1. **Update Docker Configuration:** Ensure that the Docker container setup includes a script or configuration to automatically start the Apache service when the container is launched.
-2. **Automate Service Checks:** Implement automated checks to confirm that critical services, such as Apache, are running after a container is started.
-3. **Improve Monitoring and Alerts:** Add monitoring to detect if a critical service is not running and create alerts to notify engineers immediately.
-4. **Review Deployment Process:** Conduct a review of the Docker container deployment process to identify and correct any other potential misconfigurations.
-5. **Training for On-Call Engineers:** Provide additional training for on-call engineers to handle similar issues in the future, ensuring they can quickly diagnose and resolve problems.
+**1. Update Docker Configuration:** Ensuring that the Docker container setup includes a script or configuration to automatically start the Apache service when the container is launched.
+**2. Automate Service Checks:** Implementation of automated checks to confirm that critical services, such as Apache, are running after a container is started.
+**3. Improve Monitoring and Alerts:** Adding monitoring to detect if a critical service is not running and creating alerts to notify engineers immediately.
+**4. Review Deployment Process:** Conducting a review of the Docker container deployment process to identify and correct any other potential misconfigurations.
+**5. Training for On-Call Engineers:** Provision of additional training for on-call engineers to handle similar issues in the future, ensuring they can quickly diagnose and resolve problems.
 
 By implementing these corrective and preventative measures, the team aims to minimize the risk of similar outages and ensure a more reliable web service.
