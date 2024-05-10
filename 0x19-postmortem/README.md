@@ -35,10 +35,10 @@ To resolve the issue, the DevOps team manually started the Apache service using 
 
 To prevent this issue from happening again, the following corrective and preventative measures were identified:
 
-**1. Update Docker Configuration:** Ensuring that the Docker container setup includes a script or configuration to automatically start the Apache service when the container is launched.
-**2. Automate Service Checks:** Implementation of automated checks to confirm that critical services, such as Apache, are running after a container is started.
-**3. Improve Monitoring and Alerts:** Adding monitoring to detect if a critical service is not running and creating alerts to notify engineers immediately.
-**4. Review Deployment Process:** Conducting a review of the Docker container deployment process to identify and correct any other potential misconfigurations.
-**5. Training for On-Call Engineers:** Provision of additional training for on-call engineers to handle similar issues in the future, ensuring they can quickly diagnose and resolve problems.
+1. **Update Docker Configuration:** Ensuring that the Docker container setup includes a script or configuration to automatically start the Apache service when the container is launched.
+2. **Automate Service Checks:** Implementation of automated checks to confirm that critical services, such as Apache, are running after a container is started.
+3. **Improve Monitoring and Alerts:** Adding monitoring to detect if a critical service is not running and creating alerts to notify engineers immediately.
+4. **Review Deployment Process:** Conducting a review of the Docker container deployment process to identify and correct any other potential misconfigurations.
+5. **Training for On-Call Engineers:** Provision of additional training for on-call engineers to handle similar issues in the future, ensuring they can quickly diagnose and resolve problems.
 
 By implementing these corrective and preventative measures, the team aims to minimize the risk of similar outages and ensure a more reliable web service.
