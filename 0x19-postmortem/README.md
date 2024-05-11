@@ -11,9 +11,9 @@
 
 **Duration of Outage:** The outage lasted for approximately 45 minutes, starting at 3:00 PM and ending at 3:45 PM (UTC).
 
-**Impact:** The web service running on Apache, inside a Docker container was inaccessible, affecting all users attempting to access the service. Approximately 100% of users were unable to access the site during the outage.
+**Impact:** The web service running on Apache, inside a Docker container, was inaccessible, affecting all users attempting to access the service. Approximately 100% of users were unable to access the site during the outage.
 
-**Root Cause:** The root cause was that the Apache service, inside the Docker container was not started due to a misconfiguration in the Docker container setup process.
+**Root Cause:** The root cause was that the Apache service, inside the Docker container, was not started due to a misconfiguration in the Docker container setup process.
 
 
 ## Timeline
