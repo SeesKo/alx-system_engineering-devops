@@ -17,16 +17,20 @@ def top_ten(subreddit):
 
     try:
         response = requests.get(url, headers=headers, allow_redirects=False)
+        response.raise_for_status()
 
-        if response.status_code == 200:
-            data = response.json()
-            posts = data.get('data', {}).get('children', [])
-
-            for post in posts[:10]:
+        data = response.json()
+        if 'data' in data and 'children' in data['data']:
+            posts = data['data']['children'][:10]
+            for post in posts:
                 print(post['data'].get('title', 'No Title'))
-        elif response.status_code in {302, 404}:
-            print("None")
         else:
-            print("None")
+            print("No posts found")
+    except requests.HTTPError as e:
+        print(f"HTTP Error: {e}")
+    except requests.RequestException as e:
+        print(f"Request Exception: {e}")
+    except ValueError as e:
+        print("Error parsing JSON response")
     except Exception as e:
-        print("None")
+        print(f"An unexpected error occurred: {e}")
