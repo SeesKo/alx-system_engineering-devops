@@ -1,6 +1,6 @@
 # 0x1B. Web stack debugging #4 #
 
-ALX System Engineering Devops - More web stack debugging (with Puppet).
+ALX System Engineering Devops - More advanced web stack debugging (with Puppet).
 
 
 ## About this Project
