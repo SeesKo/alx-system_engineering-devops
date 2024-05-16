@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Script reloads Gunicorn in a graceful way
+
+# Find the PID of the Gunicorn master process
+gunicorn_master_pid=$(ps aux | grep '[g]unicorn.*--workers' | awk '{print $2}')
+
+if [ -z "$gunicorn_master_pid" ]; then
+    echo "Gunicorn master process not found!"
+    exit 1
+fi
+
+# Send a HUP signal to the master process to gracefully reload
+kill -HUP "$gunicorn_master_pid"
+
+echo "Gunicorn master process ($gunicorn_master_pid) reloaded gracefully."
