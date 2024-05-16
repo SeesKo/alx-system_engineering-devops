@@ -6,7 +6,7 @@ server {
     server_name 100.205.17.138
 
     # Customize HTTP response header
-    add_header X-Served-By 528175-web-01;
+    add_header X-Served-By 258517-web-01;
     
     location = /airbnb-onepage/ {
         proxy_pass http://127.0.0.1:5000/airbnb-onepage/;
